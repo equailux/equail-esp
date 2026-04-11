@@ -3,6 +3,7 @@
 #include "./station.h"
 #include "./websocket.h"
 #include "./sensors/main.h"
+#include "./actuators/main.h"
 
 //
 
@@ -14,10 +15,12 @@ void setup()
     sta::setup();
     wsc::setup();
     ssr::setup();
+    att::setup();
 }
 
 void loop()
 {
     if (!wsc::loop()) return;
     ssr::loop();
+    att::loop();
 }
