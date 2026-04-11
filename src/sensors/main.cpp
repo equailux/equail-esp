@@ -4,6 +4,7 @@
 #include "./internal/light.h"
 #include "./internal/limitter.h"
 #include "./internal/ultrasonic.h"
+#include "./internal/sound.h"
 #include <ArduinoJson.h>
 
 //
@@ -16,6 +17,7 @@ namespace ssr
         ssr::internal::setupBH1750();
         ssr::internal::setupLimitter();
         ssr::internal::setupUltrasonic();
+        ssr::internal::setupSound();
     }
 
     void loop()
@@ -27,6 +29,7 @@ namespace ssr
         if (ssr::internal::isBH1750Readable()) ssr::internal::readBH1750(arr);
         if (ssr::internal::isLimitterReadable()) ssr::internal::readLimitter(arr);
         if (ssr::internal::isUltrasonicReadable()) ssr::internal::readUltrasonic(arr);
+        if (ssr::internal::isSoundReadable()) ssr::internal::readSound(arr);
         if (arr.size() > 0) ssr::internal::invokeOnReadHooks(arr);
     }
 }
