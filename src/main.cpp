@@ -5,6 +5,7 @@
 #include "./sensors/main.h"
 #include "./actuators/main.h"
 #include "./automations/main.h"
+#include "./lcd.h"
 
 //
 
@@ -18,6 +19,7 @@ void setup()
     ssr::setup();
     att::setup();
     aut::setup();
+    lcd::setup();
 }
 
 void loop()
