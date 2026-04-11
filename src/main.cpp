@@ -2,6 +2,7 @@
 #include "Wire.h"
 #include "./station.h"
 #include "./websocket.h"
+#include "./sensors/main.h"
 
 //
 
@@ -12,9 +13,11 @@ void setup()
 
     sta::setup();
     wsc::setup();
+    ssr::setup();
 }
 
 void loop()
 {
     if (!wsc::loop()) return;
+    ssr::loop();
 }
