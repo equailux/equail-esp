@@ -1,12 +1,13 @@
 #include <WiFi.h>
 #include "station.h"
+#include "secrets.h"
 
 //
 
 namespace sta
 {
-    const char *ssid = "equail";
-    const char *password = "12345678";
+    const char *ssid = WIFI_SSID;
+    const char *password = WIFI_PASS;
     bool connected = false;
 
     //

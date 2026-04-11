@@ -1,6 +1,7 @@
 #include "websocket.h"
 #include <WiFi.h>
 #include "ws.h"
+#include "secrets.h"
 
 //
 
@@ -34,6 +35,6 @@ namespace wsc
     {
         if (event != WiFiEvent_t::ARDUINO_EVENT_WIFI_STA_GOT_IP) return;
         Serial.printf("WebSocket now connecting.\n");
-        ws::init("gateway", 4000, "/ws/esp", "key");
+        ws::init(WS_HOST, WS_PORT, WS_PATH, WS_KEY);
     }
 }
