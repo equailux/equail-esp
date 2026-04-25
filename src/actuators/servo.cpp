@@ -1,6 +1,7 @@
 #include "servo.h"
 #include "./internal/servo.h"
 #include "ESP32Servo.h"
+#include "secrets.h"
 
 //
 
@@ -9,8 +10,8 @@ namespace att
     Servo servo1;
     Servo servo2;
 
-    int servo1Pin = 0;
-    int servo2Pin = 0;
+    int servo1Pin = ATT_SERVO1_PIN;
+    int servo2Pin = ATT_SERVO2_PIN;
     int servo1Target = 0;
     int servo2Target = 0;
 

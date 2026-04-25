@@ -1,5 +1,6 @@
 #include "light.h"
 #include <BH1750.h>
+#include "secrets.h"
 
 //
 
@@ -21,6 +22,7 @@ namespace ssr::internal
     {
         float light = bh1750.readLightLevel();
         JsonObject obj = arr.add<JsonObject>();
+        obj["tag"] = SSR_BH1750_TAG;
         obj["name"] = "BH1750";
         obj["unit"] = "lux";
         obj["value"] = light;

@@ -1,11 +1,12 @@
 #include "ultrasonic.h"
+#include "secrets.h"
 
 //
 
 namespace ssr
 {
-    int ultrasonicTrigPin = 16;
-    int ultrasonicEchoPin = 17;
+    int ultrasonicTrigPin = SSR_ULTRASONIC_TRIG_PIN;
+    int ultrasonicEchoPin = SSR_ULTRASONIC_ECHO_PIN;
     float ultrasonicDistance = 50;
     float ultrasonicDisplacement = 5;
     
@@ -32,6 +33,7 @@ namespace ssr::internal
         float percent = (ultrasonicDistance - cm) / ultrasonicDisplacement;
 
         JsonObject obj = arr.add<JsonObject>();
+        obj["tag"] = SSR_ULTRASONIC_TAG;
         obj["name"] = "Water Level";
         obj["unit"] = "%";
         obj["value"] = percent;

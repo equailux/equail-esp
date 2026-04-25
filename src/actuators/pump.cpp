@@ -1,12 +1,13 @@
 #include "pump.h"
 #include "./internal/pump.h"
 #include <Arduino.h>
+#include "secrets.h"
 
 //
 
 namespace att
 {
-    int pumpPin = 19;
+    int pumpPin = ATT_PUMP_PIN;
 
     //
 

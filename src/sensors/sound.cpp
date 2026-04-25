@@ -1,12 +1,13 @@
 #include "sound.h"
 #include <Arduino.h>
 #include <ArduinoJson.h>
+#include "secrets.h"
 
 //
 
 namespace ssr
 {
-    int soundPin = 33;
+    int soundPin = SSR_SOUND_PIN;
     unsigned long soundAlpha = 0;
     unsigned long soundInterval = 50;
 }
@@ -20,11 +21,13 @@ namespace ssr::internal
 
     void readSound(JsonArray &arr)
     {
-        int value = digitalRead(soundPin);
+        float raw = (float)analogRead(soundPin);
+        float value = raw == 0 ? 0 : raw / 4095 * 100.0;
         JsonObject obj = arr.add<JsonObject>();
-        obj["name"] = "Sound Detector";
+        obj["tag"] = SSR_SOUND_TAG;
+        obj["name"] = "Noise Level";
         obj["unit"] = "%";
-        obj["value"] = value == LOW;
+        obj["value"] = value;
 
         soundAlpha = millis();
     }

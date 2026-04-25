@@ -1,15 +1,16 @@
 #include "motor.h"
 #include "./internal/motor.h"
 #include <Arduino.h>
+#include "secrets.h"
 
 //
 
 namespace att
 {
-    int motorPin1 = 25;
-    int motorPin2 = 26;
-    int motorPinPwma = 27;
-    int motorPinStby = 32;
+    int motorPin1 = ATT_MOTOR_PIN1;
+    int motorPin2 = ATT_MOTOR_PIN2;
+    int motorPinPwma = ATT_MOTOR_PIN_PWMA;
+    int motorPinStby = ATT_MOTOR_PIN_STBY;
 
     int motorPwmCh = 0;
     int motorPwmRes = 20000;

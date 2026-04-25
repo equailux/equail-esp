@@ -1,12 +1,13 @@
 #include "bulb.h"
 #include "./internal/bulb.h"
 #include <Arduino.h>
+#include "secrets.h"
 
 //
 
 namespace att
 {
-    int bulbPin = 18;
+    int bulbPin = ATT_BULB_PIN;
 
     //
 

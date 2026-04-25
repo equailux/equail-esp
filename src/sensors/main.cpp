@@ -6,30 +6,56 @@
 #include "./internal/ultrasonic.h"
 #include "./internal/sound.h"
 #include <ArduinoJson.h>
+#include "ws.h"
+#include "secrets.h"
 
 //
 
 namespace ssr
 {
-    void setup()
-    {
-        ssr::internal::setupDHT();
-        ssr::internal::setupBH1750();
-        ssr::internal::setupLimitter();
-        ssr::internal::setupUltrasonic();
-        ssr::internal::setupSound();
-    }
-
-    void loop()
+    void onRetrieve(JsonArray data)
     {
         JsonDocument doc;
         JsonArray arr = doc.to<JsonArray>();
 
-        if (ssr::internal::isDHTReadable()) ssr::internal::readDHT(arr);
-        if (ssr::internal::isBH1750Readable()) ssr::internal::readBH1750(arr);
-        if (ssr::internal::isLimitterReadable()) ssr::internal::readLimitter(arr);
-        if (ssr::internal::isUltrasonicReadable()) ssr::internal::readUltrasonic(arr);
-        if (ssr::internal::isSoundReadable()) ssr::internal::readSound(arr);
+        bool dht = false, bh = false, lim = false, ultra = false, sound = false;
+
+        for (JsonObject sensor : data)
+        {
+            String tag = sensor["tag"].as<String>();
+            tag.trim();
+            tag.toLowerCase();
+
+            if (tag.length() <= 0) continue;
+            if (SSR_DHT_ENABLED && tag.startsWith(SSR_DHT_TAG)) dht = true;
+            if (SSR_BH1750_ENABLED && tag.startsWith(SSR_BH1750_TAG)) bh = true;
+            if (SSR_LIMITTER_ENABLED && tag.startsWith(SSR_LIMITTER_TAG)) lim = true;
+            if (SSR_ULTRASONIC_ENABLED && tag.startsWith(SSR_ULTRASONIC_TAG)) ultra = true;
+            if (SSR_SOUND_ENABLED && tag.startsWith(SSR_SOUND_TAG)) sound = true;
+        }
+
+        if (dht) ssr::internal::readDHT(arr);
+        if (bh) ssr::internal::readBH1750(arr);
+        if (lim) ssr::internal::readLimitter(arr);
+        if (ultra) ssr::internal::readUltrasonic(arr);
+        if (sound) ssr::internal::readSound(arr);
+
         if (arr.size() > 0) ssr::internal::invokeOnReadHooks(arr);
+    }
+
+    void setup()
+    {
+        if (SSR_DHT_ENABLED) ssr::internal::setupDHT();
+        if (SSR_BH1750_ENABLED) ssr::internal::setupBH1750();
+        if (SSR_LIMITTER_ENABLED) ssr::internal::setupLimitter();
+        if (SSR_ULTRASONIC_ENABLED) ssr::internal::setupUltrasonic();
+        if (SSR_SOUND_ENABLED) ssr::internal::setupSound();
+
+        ws::onEvent("Reading", ws::EventQuery::Retrieve, onRetrieve);
+        ssr::onRead([](JsonArray arr) { ws::emit("Reading", arr, ws::EventQuery::Create); });
+    }
+
+    void loop()
+    {
     }
 }
