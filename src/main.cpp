@@ -4,7 +4,6 @@
 #include "./websocket.h"
 #include "./sensors/main.h"
 #include "./actuators/main.h"
-#include "./automations/main.h"
 #include "./lcd.h"
 
 //
@@ -18,7 +17,6 @@ void setup()
     wsc::setup();
     ssr::setup();
     att::setup();
-    aut::setup();
     lcd::setup();
 }
 
@@ -27,5 +25,4 @@ void loop()
     if (!wsc::loop()) return;
     ssr::loop();
     att::loop();
-    aut::loop();
 }
