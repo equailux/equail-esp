@@ -7,8 +7,7 @@ namespace ssr
 {
     int ultrasonicTrigPin = SSR_ULTRASONIC_TRIG_PIN;
     int ultrasonicEchoPin = SSR_ULTRASONIC_ECHO_PIN;
-    float ultrasonicDistance = 50;
-    float ultrasonicDisplacement = 5;
+    float ultrasonicDistance = 30;
     
     unsigned long ultrasonicAlpha = 0;
     unsigned long ultrasonicInterval = 5000;
@@ -30,13 +29,13 @@ namespace ssr::internal
 
         long duration = pulseIn(ultrasonicEchoPin, HIGH, 30000);
         float cm = duration * 0.0343 / 2.0;
-        float percent = (ultrasonicDistance - cm) / ultrasonicDisplacement;
+        float displacement = ultrasonicDistance - cm;
 
         JsonObject obj = arr.add<JsonObject>();
         obj["tag"] = SSR_ULTRASONIC_TAG;
         obj["name"] = "Water Level";
-        obj["unit"] = "%";
-        obj["value"] = percent;
+        obj["unit"] = "cm";
+        obj["value"] = displacement <= 0 ? 0 : displacement;
 
         ultrasonicAlpha = millis();
     }
