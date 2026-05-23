@@ -4,6 +4,7 @@
 #include "./websocket.h"
 #include "./sensors/main.h"
 #include "./actuators/main.h"
+#include "./feeding/main.h"
 #include "./lcd.h"
 
 //
@@ -18,10 +19,12 @@ void setup()
     ssr::setup();
     att::setup();
     lcd::setup();
+    fed::setup();
 }
 
 void loop()
 {
+    fed::loop();
     if (!wsc::loop()) return;
     ssr::loop();
     att::loop();
