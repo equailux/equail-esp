@@ -13,7 +13,8 @@ namespace att
 
     void writePump(int state)
     {
-        digitalWrite(pumpPin, state ? LOW : HIGH);
+        digitalWrite(pumpPin, state != 0 ? LOW : HIGH);
+        Serial.printf("[Actuator]: Input %d on pin %d.\n", state, pumpPin);
     }
 }
 
@@ -22,6 +23,9 @@ namespace att::internal
     void setupPump()
     {
         pinMode(pumpPin, OUTPUT);
+        digitalWrite(pumpPin, HIGH);
+        digitalWrite(pumpPin, LOW);
+        delay(100);
         digitalWrite(pumpPin, HIGH);
     }
 }

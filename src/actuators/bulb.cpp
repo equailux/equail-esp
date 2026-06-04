@@ -13,7 +13,8 @@ namespace att
 
     void writeBulb(int state)
     {
-        digitalWrite(bulbPin, state ? LOW : HIGH);
+        digitalWrite(bulbPin, state != 0 ? LOW : HIGH);
+        Serial.printf("[Actuator]: Input %d on pin %d.\n", state, bulbPin);
     }
 }
 
@@ -22,6 +23,9 @@ namespace att::internal
     void setupBulb()
     {
         pinMode(bulbPin, OUTPUT);
+        digitalWrite(bulbPin, HIGH);
+        digitalWrite(bulbPin, LOW);
+        delay(100);
         digitalWrite(bulbPin, HIGH);
     }
 }
