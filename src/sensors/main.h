@@ -2,7 +2,7 @@
 #include "hook.h"
 #include "dht.h"
 #include "light.h"
-#include "ultrasonic.h"
+#include "rain.h"
 #include "sound.h"
 
 // - DHT22
