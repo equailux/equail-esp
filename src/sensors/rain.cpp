@@ -21,7 +21,8 @@ namespace ssr::internal
 
     void readRain(JsonArray &arr)
     {
-        float value = digitalRead(rainPin) == HIGH ? 100.0 : 0.0;
+        int reading = analogRead(rainPin);
+        float value = (float)(4095 - reading) / 4095 * 100.0f;
 
         JsonObject obj = arr.add<JsonObject>();
         obj["tag"] = SSR_RAIN_TAG;
